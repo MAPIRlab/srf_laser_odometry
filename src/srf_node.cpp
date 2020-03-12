@@ -1,38 +1,24 @@
 /*********************************************************************
 *
-* Software License Agreement (BSD License)
+* Software License Agreement (GPLv3 License)
 *
-*  Copyright (c)  2015, Örebro University, Sweden
-*  All rights reserved.
-*
-*  Redistribution and use in source and binary forms, with or without
-*  modification, are permitted provided that the following conditions
-*  are met:
-*
-*   * Redistributions of source code must retain the above copyright
-*     notice, this list of conditions and the following disclaimer.
-*   * Redistributions in binary form must reproduce the above
-*     copyright notice, this list of conditions and the following
-*     disclaimer in the documentation and/or other materials provided
-*     with the distribution.
-*
-*  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-*  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-*  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-*  FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-*  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-*  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-*  BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-*  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-*  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-*  LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-*  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-*  POSSIBILITY OF SUCH DAMAGE.
-*
-*  Authors: Mariano Jaimez Tarifa, Javier G. Monroy
+*  Authors: Mariano Jaimez Tarifa and Javier Monroy
 *           MAPIR group, University of Malaga, Spain
+*           http://mapir.uma.es
+*
 *  Date: January 2016
-*  More Info: http://mapir.isa.uma.es/mapirwebsite/index.php/mapir-downloads/papers/217
+*
+* This pkgs offers a fast and reliable estimation of 2D odometry based on planar laser scans.
+* SRF is a fast and precise method to estimate the planar motion of a lidar from consecutive range scans. 
+* SRF presents a dense method for estimating planar motion with a laser scanner. Starting from a symmetric 
+* representation of geometric consistency between scans, we derive a precise range flow constraint and 
+* express the motion of the scan observations as a function of the rigid motion of the scanner. 
+* In contrast to existing techniques, which align the incoming scan with either the previous one or the last 
+* selected keyscan, we propose a combined and efficient formulation to jointly align all these three scans at 
+* every iteration. This new formulation preserves the advantages of keyscan-based strategies but is more robust 
+* against suboptimal selection of keyscans and the presence of moving objects.
+*
+*  More Info: http://mapir.isa.uma.es/work/SRF-Odometry
 *********************************************************************/
 
 #include "srf_node.h"
