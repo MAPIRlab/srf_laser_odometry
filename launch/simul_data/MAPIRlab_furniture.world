@@ -1,0 +1,142 @@
+#--------------------------------#
+# World file for Stage simulator #
+#--------------------------------#
+
+resolution 0.01   # resolution of the underlying raytrace model in meters
+interval_sim 100   # simulation timestep in milliseconds
+
+
+# 1. Define new models
+#-----------------------
+define floorMap model         # The obstacles map of the environment
+(
+  color "gray30"              #specify the color of the object using a color name from the X11 database 
+  boundary 1                  # most maps will need a bounding box
+
+  # GUI properties
+  gui_nose 0                  #if 1, draw a nose on the model showing its heading (positive X axis)
+  gui_grid 0                  #if 1, draw a scaling grid over the model
+  gui_outline 0
+  gui_move 0
+  
+  #Interaction
+  gripper_return 0            #if 1, this model can be gripped by a gripper and can be pushed around by collisions with anything that has a non-zero obstacle_return.
+  fiducial_return 0
+  laser_return 1              #The laser is able to collide with it
+)
+
+
+# 2. Predefined models
+#----------------------
+define LaserFront ranger          # Infra-red (IR) range sensor
+(
+  sensor(
+    range [ 0.0  30.0 ]           #min max in [m]
+    fov 270.25                    #deg
+    samples 1081                  #Num samples
+  )
+
+  # generic model properties
+  #color "black"
+  #size [ 0.050 0.050 0.100 ]
+  
+  block(
+		points 4
+		point[0] [0 1]
+		point[1] [1 1]
+		point[2] [1 0]
+		point[3] [0 0]
+		z [0 1]
+	)
+	
+  # generic model properties
+  color_rgba [ 0 0 1 0.3 ]
+  size [ 0.05 0.005 0.1 ]
+)
+
+
+define CameraFront camera          # RGB camera
+(
+  resolution [640 480]   #width,height (px)
+  range [0.2 2.8]        #(m) min, max
+  fov [ 100.0 100.0 ]    #horizonal, vertical
+  pantilt [ 0.0 45.0 ]   #degrees
+  
+  # generic model properties
+  color "red"
+  size [ 0.050 0.050 0.100 ]
+)
+
+
+define robotBase position      # Mobile robot base.
+(
+  size [0.45 0.45 1.0]
+  origin [0.00 0.000 0.000 0.000]
+  gui_nose 1
+  drive "diff"
+  
+  # This block approximates a circular shape of a Robot
+  # The robot shapes is then a circle scalated to the "size" bounding box
+  block( points 16
+    point[0] [ 0.225 0.000 ]
+    point[1] [ 0.208 0.086 ]
+    point[2] [ 0.159 0.159 ]
+    point[3] [ 0.086 0.208 ]
+    point[4] [ 0.000 0.225 ]
+    point[5] [ -0.086 0.208 ]
+    point[6] [ -0.159 0.159 ]
+    point[7] [ -0.208 0.086 ]
+    point[8] [ -0.225 0.000 ]
+    point[9] [ -0.208 -0.086 ]
+    point[10] [ -0.159 -0.159 ]
+    point[11] [ -0.086 -0.208 ]
+    point[12] [ -0.000 -0.225 ]
+    point[13] [ 0.086 -0.208 ]
+    point[14] [ 0.159 -0.159 ]
+    point[15] [ 0.208 -0.086 ]
+    z [0 1]
+  )
+    
+  # Add a laser
+  LaserFront(pose [ 0.10 0.000 -0.500 0.000 ])    #pose in its parent's coordinate system
+  
+  #Add a camera
+  CameraFront(pose [ -0.20 0.000 0.6 0.000 ])    #pose in its parent's coordinate system
+  
+  #LOCALIZATION
+  # Report error-free position in world coordinates
+  localization "gps"
+  localization_origin [ 0 0 0 0 ]
+
+  # Some more realistic localization error
+  #localization "odom"
+  #odom_error [ 0.01 0.01 0.0 0.1 ]
+)
+
+
+
+# 3. Launch Items
+#----------------------
+window                         #Main Simulator window
+(
+  # gui properties
+  size [ 745 448 ]          # size of the window in pixels
+  #center [0 0]              # center [float float] location of the center of the window in world coordinates (meters)
+  #rotate [ 0.000 -1.560 ]
+  #scale 6.896
+)
+
+floorMap                     # load an environment bitmap
+(
+  name "SimulatedMap"
+
+  #MAPIRlab_furniture.pg 1000x1100px
+  # resolution 0.01 m/px
+  bitmap "./MAPIRlab_furniture.pgm"
+  size [10.0 11.0 3.00]           #m  
+  pose [ 0.0 0.0 0.000 0.000 ]    #Coordinates (m) of the Center of the image_map
+)
+
+# throw in a robot
+robotBase( pose [ 2.0 3.0 0.000 0.000 ] name "SimRobot" color "blue")
+

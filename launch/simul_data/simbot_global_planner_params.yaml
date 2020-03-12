@@ -1,0 +1,18 @@
+NavfnROS:
+  allow_unknown: false
+  default_tolerance: 0.0
+  visualize_potential: true 
+  use_dijkstra: true
+  use_quadratic: true
+  use_grid_path: true
+  old_navfn_behavior: false
+
+
+# Defaults:
+#  allow_unknown: true
+#  default_tolerance: 0.0
+#  visualize_potential: false 
+#  use_dijkstra: true
+#  use_quadratic: true
+#  use_grid_path: false
+#  old_navfn_behavior: false

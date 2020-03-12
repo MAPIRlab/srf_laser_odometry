@@ -1,0 +1,34 @@
+########################################################################
+# Local parameters for the COSTMAP_2D pkg (navigation stack)
+########################################################################
+local_costmap:
+  plugins:
+#   - {name: static_map, type: "costmap_2d::StaticLayer" }
+    - {name: obstacles, type: "costmap_2d::VoxelLayer"}
+    - {name: inflation, type: "costmap_2d::InflationLayer" }
+#   - {name: proxemic, type: "social_navigation_layers::ProxemicLayer" }
+    
+  global_frame: /odom
+  robot_base_frame: /base_link
+  update_frequency: 5.0
+  publish_frequency: 5.0
+  static_map: false
+  rolling_window: true
+  width: 6.0
+  height: 6.0
+  resolution: 0.05
+  min_obstacle_height: -10
+  always_send_full_costmap: true
+    
+  obstacles:
+    track_unknown_space: true
+  
+  inflation:
+    inflation_radius: 0.75
+    cost_scaling_factor: 5.0
+ 
+# proxemic:
+#  amplitude: 150.0
+#  covariance: 0.1
+#  cutoff: 20.0
+#  factor: 1.0

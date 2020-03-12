@@ -1,0 +1,27 @@
+<!-- 
+  This node presents a fast and precise method to estimate the planar motion of a lidar
+  from consecutive range scans. It is very useful for the estimation of the robot odometry from
+  2D laser range measurements.
+  
+  Requirements:
+  - 2D laser scan, publishing sensor_msgs::LaserScan
+  - TF transform from the laser to the robot base
+  - MRPT lib and mrpt_bridge pkg (see readme)
+-->
+
+<launch>
+
+  <node pkg="srf_laser_odometry" type="srf_laser_odometry_node" name="srf_laser_odometry" >
+    <param name="laser_scan_topic" value="/laser_scan"/>        # topic where the lidar scans are being published
+    <param name="odom_topic" value="/odom_srf" />               # topic where tu publish the odometry estimations
+    <param name="publish_tf" value="false" />                   # wheter or not to publish the tf::transform (base->odom)
+    <param name="base_frame_id" value="/base_link"/>            # frame_id (tf) of the mobile robot base. A tf transform from the laser_frame to the base_frame is mandatory
+    <param name="odom_frame_id" value="/odom" />                # frame_id (tf) to publish the odometry estimations    
+    <param name="init_pose_from_topic" value="/base_pose_ground_truth" />    # Leave empty when no init pose desired
+    <param name="laser_decimation" value="1"/>                  # 1=use SRF on all lasers, 2= use each 2 lasers, etc.        
+    <param name="laser_min_range" value="-1"/>                  # [m] Truncate laser scans measurements (-1 to ignore)
+    <param name="laser_max_range" value="-1"/>                  # [m] Truncate laser scans measurements (-1 to ignore)
+    <param name="operation_mode" value="HYBRID"/>               # CS=consecutiveScans, KS=keyScans, HYBRID=threeScansWithKeyScan
+  </node>
+
+</launch>

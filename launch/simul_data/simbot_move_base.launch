@@ -1,0 +1,26 @@
+<!-- 
+  Launch file for the MOVE_BASE node which handles costmaps and trajectory planification 
+  It publishes cmd_vel commands to the robot base
+-->
+<launch>
+  <arg name="launch_prefix" default="" />
+  <arg name="global_planner_plugin" default="navfn/NavfnROS" />
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" launch-prefix="$(arg launch_prefix)">
+  
+  
+    ## Planners
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_global_planner_params.yaml" command="load" />
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_local_planner_params.yaml" command="load" />
+    
+    ## Costmaps
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_global_params.yaml" command="load" />
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_local_params.yaml" command="load" />
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_common_params.yaml" command="load" />    
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_common_params.yaml" command="load" ns="global_costmap/obstacles" />
+    <rosparam file="$(find missions_pkg)/launch/simbot/simbot_costmap_common_params.yaml" command="load" ns="local_costmap/obstacles" />
+    <param name="base_global_planner" value="$(arg global_planner_plugin)"/>
+  </node>
+</launch>

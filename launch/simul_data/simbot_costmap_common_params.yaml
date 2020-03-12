@@ -1,0 +1,35 @@
+########################################################################
+# Common parameters for the COSTMAP_2D pkg (navigation stack)
+########################################################################
+
+obstacle_range: 2.5 #Update costmap with information about obstacles that are within 2.5 meters of the base
+raytrace_range: 3.0 #Clear out space (remove obstacles) up to 3.0 meters away given a sensor reading
+
+# FOOTPRINT
+#-----------
+#footprint: [[0.35,0.25],[0.35,-0.25],[-0.35,-0.25],[-0.35,0.25]]
+#A circular footprint of 0.45 diameter
+#footprint: [[ 0.225,0.000 ], [ 0.208, 0.086 ],[ 0.159, 0.159 ],[ 0.086, 0.208 ], [ 0.000, 0.225 ], [ -0.086, 0.208 ], [ -0.159, 0.159 ], [ -0.208, 0.086 ], [ -0.225, 0.000 ],[ -0.208, -0.086 ], [ -0.159, -0.159 ], [ -0.086, -0.208 ], [ -0.000, -0.225 ], [ 0.086, -0.208 ], [ 0.159, -0.159 ], [ 0.208, -0.086 ]]    
+robot_radius: 0.26           #[m] radius of the robot shape for Giraff Robots (instead of the footprint)
+#inflation_radius: 0.6
+
+
+# List of sensors that are going to be passing information to the costmap
+observation_sources: laser_scan laser2_scan laser_stage
+
+#sensor_id: {sensor_frame: [], data_type: [LaserScan/PointCloud], topic: [], marking: true, clearing: true}
+laser_scan: {sensor_frame: /laser_link, data_type: LaserScan, topic: /laser_scan, marking: true, clearing: true}
+laser2_scan: {sensor_frame: /laser2_link, data_type: LaserScan, topic: /laser2_scan, marking: true, clearing: true}
+laser_stage: {sensor_frame: /laser_stage, data_type: LaserScan, topic: /laser_scan, marking: true, clearing: true}
+
+
+#Planners
+#---------
+base_global_planner: navfn/NavfnROS
+base_local_planner: dwa_local_planner/DWAPlannerROS
+#base_local_planner: base_local_planner/TrajectoryPlannerROS
+
+planner_frequency: 1.0
+controller_frequency: 20.0
+planner_patience: 5.0
+controller_patience: 5.0

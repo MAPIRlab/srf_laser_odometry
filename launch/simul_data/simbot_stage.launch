@@ -1,0 +1,20 @@
+<!-- 
+  This launch file starts the STAGE robotic simulator 
+  To see the laser and robot configuration params, see World file
+  Subscribed topics: cmd_vel
+  Published topics:  odom, base_scan, base_pose_ground_truth, image, depth, camera_info
+--> 
+
+<launch>
+  <arg name="world_file" default="-d $(find srf_laser_odometry)/launch/simul_data/UMA_236.world" />
+  <arg name="disable_odometry" default="false" />           #by default publish the odometry over TF and as a topic
+  
+  <node pkg="stage_ros" type="stageros" name="stage_ros" respawn="false" output="screen" args="$(arg world_file)" >
+    <param name="laser_scan_topic" value="/laser_scan"/>
+    <param name="laser_frame_id" value="laser_stage" />
+    
+    <param name="disable_odometry" value="$(arg disable_odometry)" />  #if true, no topic, neither tf transform are published for odometry
+    <param name="odom_topic" value="/odom"/>
+    <param name="odom_frame_id" value="odom" />
+  </node>  
+</launch>

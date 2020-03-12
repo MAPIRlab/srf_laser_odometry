@@ -1,0 +1,31 @@
+########################################################################
+# Global parameters for the COSTMAP_2D pkg (navigation stack)
+########################################################################
+global_costmap:
+  plugins:
+    - {name: static_map, type: "costmap_2d::StaticLayer" }
+    - {name: obstacles,  type: "costmap_2d::VoxelLayer"}
+    - {name: inflation,  type: "costmap_2d::InflationLayer" }
+    #- {name: proxemic,   type: "social_navigation_layers::ProxemicLayer" }
+    
+  global_frame: /map
+  robot_base_frame: /base_link
+  update_frequency: 1.0
+  publish_frequency: 0.5
+  static_map: true
+  rolling_window: false
+  always_send_full_costmap: true
+  visualize_potential: true
+
+  obstacles:
+    track_unknown_space: true
+ 
+  inflation:
+    inflation_radius: 0.75
+    cost_scaling_factor: 5.0
+    
+# proxemic:
+#   amplitude: 150.0
+#   covariance: 0.1
+#   cutoff: 20
+#   factor: 1.0

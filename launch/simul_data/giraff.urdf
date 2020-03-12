@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<robot name="giraff">
+
+  ### Define colors
+  <material name="blue">
+    <color rgba="0.41 0.83 0.96 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+    <material name="grey">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+  <material name="red">
+    <color rgba="0.9 0.0 0.0 1"/>
+  </material>
+  <material name="green">
+    <color rgba="0.0 0.9 0.0 1"/>
+  </material>
+
+  # Base
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.23" radius="0.26"/>
+      </geometry>
+      <material name="blue"/>
+      <origin xyz="0 0 0.15"/>
+    </visual>
+  </link>
+
+  # Right wheel
+  <link name="right_wheel">
+    <visual>
+      <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.03" radius="0.10"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+  
+  <joint name="base_to_right_wheel_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <origin rpy="0 0 0" xyz="0 0.26 0.1"/>
+  </joint>
+
+
+  #Left wheel
+  <link name="left_wheel">
+    <visual>
+      <origin rpy="1.57075 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.03" radius="0.10"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+  
+  <joint name="base_to_left_wheel_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin rpy="0 0 0" xyz="0 -0.26 0.1"/>
+  </joint>
+
+
+  # Body
+  <link name="body">
+    <visual>
+      <geometry>
+        <box size="0.3 0.2 0.45"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_body" type="fixed">
+    <parent link="base_link"/>
+    <child link="body"/>
+    <origin xyz="0.0 0.0 0.455"/>
+  </joint>
+  
+  
+  #Neck
+  <link name="neck">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.45"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+  </link>
+
+  <joint name="body_to_neck" type="fixed">
+    <parent link="body"/>
+    <child link="neck"/>
+    <origin xyz="0.0 0.0 0.45"/>
+  </joint>
+  
+  
+  #Head  
+  <link name="head">
+    <visual>
+      <geometry>
+        <box size="0.05 0.23 0.38"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+  </link>
+  
+  <joint name="neck_to_head" type="fixed">
+    <parent link="neck"/>
+    <child link="head"/>
+    <origin xyz="0 0 0.415"/>
+  </joint>
+  
+  
+  #Screen
+  <link name="screen">
+    <visual>
+      <geometry>
+        <box size="0.05 0.21 0.36"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+  </link>
+  
+  <joint name="head_to_screen" type="fixed">
+    <parent link="head"/>
+    <child link="screen"/>
+    <origin xyz="0.02 0.0 0.0"/>
+  </joint>
+  
+  
+  
+  
+  ## EXTRAS ##
+  
+  #Hokuyo front
+  <link name="hokuyo_front">
+    <visual>
+      <geometry>
+        <box size="0.05 0.05 0.05"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+  
+  <joint name="base_to_hokuyo_front" type="fixed">
+    <parent link="base_link"/>
+    <child link="hokuyo_front"/>
+    <origin xyz="0.2 0.0 0.28"/>
+  </joint>
+  
+  #red button
+  <link name="red_button">
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.03"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+  </link>
+  
+  <joint name="body_to_red_button" type="fixed">
+    <parent link="body"/>
+    <child link="red_button"/>
+    <origin xyz="0.11 0.05 0.225"/>
+  </joint>
+  
+  #green button
+  <link name="green_button">
+    <visual>
+      <geometry>
+        <cylinder length="0.02" radius="0.03"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+  </link>
+  
+  <joint name="body_to_green_button" type="fixed">
+    <parent link="body"/>
+    <child link="green_button"/>
+    <origin xyz="0.11 -0.05 0.225"/>
+  </joint>
+  
+</robot>
