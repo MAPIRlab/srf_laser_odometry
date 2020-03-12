@@ -1,9 +1,25 @@
-//====================================================
-//  Project: Laser odometry
-//  Authors: Mariano Jaimez Tarifa, Javier G. Monroy
-//           MAPIR group, University of Malaga, Spain
-//  Date: January 2016
-//====================================================
+/*********************************************************************
+*
+* Software License Agreement (GPLv3 License)
+*
+*  Authors: Mariano Jaimez Tarifa and Javier Monroy
+*           MAPIR group, University of Malaga, Spain
+*           http://mapir.uma.es
+*
+*  Date: January 2016
+*
+* This pkgs offers a fast and reliable estimation of 2D odometry based on planar laser scans.
+* SRF is a fast and precise method to estimate the planar motion of a lidar from consecutive range scans. 
+* SRF presents a dense method for estimating planar motion with a laser scanner. Starting from a symmetric 
+* representation of geometric consistency between scans, we derive a precise range flow constraint and 
+* express the motion of the scan observations as a function of the rigid motion of the scanner. 
+* In contrast to existing techniques, which align the incoming scan with either the previous one or the last 
+* selected keyscan, we propose a combined and efficient formulation to jointly align all these three scans at 
+* every iteration. This new formulation preserves the advantages of keyscan-based strategies but is more robust 
+* against suboptimal selection of keyscans and the presence of moving objects.
+*
+*  More Info: http://mapir.isa.uma.es/work/SRF-Odometry
+*********************************************************************/
 
 
 #include <mrpt/poses/CPose2D.h>
