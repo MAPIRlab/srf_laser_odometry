@@ -1,7 +1,7 @@
 <!-- General mission file for URDF model of the robot -->
 <launch>
 
-	<param name="robot_description" textfile="$(find missions_pkg)/urdf_models/giraff.urdf" />
+	<param name="robot_description" textfile="$(find srf_laser_odometry)/launch/simul_data/giraff.urdf" />
 	<param name="use_gui" value="False"/>
     
     # Tool for setting and publishing dinamyc joint state values for a given URDF
