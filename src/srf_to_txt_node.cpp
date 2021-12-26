@@ -1,6 +1,7 @@
 /* This script prints to file the GT pose and estimations of SRF
  *
  * */
+#include <fstream>
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 #include <mrpt_bridge/pose.h>

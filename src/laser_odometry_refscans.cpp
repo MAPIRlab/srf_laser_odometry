@@ -27,9 +27,8 @@
 
 using namespace Eigen;
 using namespace std;
-using mrpt::math::square;
-using mrpt::utils::sign;
-
+using mrpt::square;
+using mrpt::sign;
 
 void SRF_RefS::initialize(unsigned int size, float FOV_rad, unsigned int odo_method)
 {
@@ -93,7 +92,7 @@ void SRF_RefS::initialize(unsigned int size, float FOV_rad, unsigned int odo_met
     weights_12.resize(cols); weights_13.resize(cols);
     null_12.resize(cols); null_13.resize(cols);
     null_12.fill(false); null_13.fill(false);
-	cov_odo.assign(0.f);
+	cov_odo.setZero();
     outliers.resize(cols);
     outliers.fill(false);
 
@@ -102,8 +101,8 @@ void SRF_RefS::initialize(unsigned int size, float FOV_rad, unsigned int odo_met
 	g_mask[0] = 1.f/16.f; g_mask[1] = 0.25f; g_mask[2] = 6.f/16.f; g_mask[3] = g_mask[1]; g_mask[4] = g_mask[0];
 
     //Initialize "last velocity" as zero
-	kai_abs.assign(0.f);
-	kai_loc_old.assign(0.f);
+    kai_abs.setZero();
+    kai_loc_old.setZero();
     overall_trans_prev.setIdentity();
 }
 
@@ -481,9 +480,8 @@ void SRF_RefS::solveSystemQuadResiduals3Scans()
     }
 
     //Solve the linear system of equations using a minimum least squares method
-    MatrixXf AtA, AtB;
-    AtA.multiply_AtA(A);
-    AtB.multiply_AtB(A,B);
+    MatrixXf AtA = A.adjoint() * A;
+    MatrixXf AtB = A.adjoint() * B;
     kai_loc_level = AtA.ldlt().solve(AtB);
 
     //Covariance matrix calculation
@@ -539,9 +537,8 @@ void SRF_RefS::solveSystemSmoothTruncQuad3Scans()
     }
 
     //Solve the linear system of equations using a minimum least squares method
-    MatrixXf AtA, AtB;
-    AtA.multiply_AtA(A);
-    AtB.multiply_AtB(A,B);
+    MatrixXf AtA = A.adjoint() * A;
+    MatrixXf AtB = A.adjoint() * B;
     kai_loc_level = AtA.ldlt().solve(AtB);
     VectorXf res = A*kai_loc_level - B;
 
@@ -614,8 +611,8 @@ void SRF_RefS::solveSystemSmoothTruncQuad3Scans()
         }
 
         //Solve the linear system of equations using a minimum least squares method
-        AtA.multiply_AtA(Aw);
-        AtB.multiply_AtB(Aw,Bw);
+        AtA = Aw.adjoint() * Aw;
+        AtB = Aw.adjoint() * Bw;
         kai_loc_level = AtA.ldlt().solve(AtB);
         res = A*kai_loc_level - B;
 
@@ -694,9 +691,8 @@ void SRF_RefS::solveSystemSmoothTruncQuadOnly13()
     }
 
     //Solve the linear system of equations using a minimum least squares method
-    MatrixXf AtA, AtB;
-    AtA.multiply_AtA(A);
-    AtB.multiply_AtB(A,B);
+    MatrixXf AtA = A.adjoint() * A;
+    MatrixXf AtB = A.adjoint() * B;
     kai_loc_level = AtA.ldlt().solve(AtB);
     VectorXf res = A*kai_loc_level - B;
     //cout << endl << "max res: " << res.maxCoeff();
@@ -757,8 +753,8 @@ void SRF_RefS::solveSystemSmoothTruncQuadOnly13()
         }
 
         //Solve the linear system of equations using a minimum least squares method
-        AtA.multiply_AtA(Aw);
-        AtB.multiply_AtB(Aw,Bw);
+        AtA = Aw.adjoint() * Aw;
+        AtB = Aw.adjoint() * Bw;
         kai_loc_level = AtA.ldlt().solve(AtB);
         res = A*kai_loc_level - B;
 
@@ -818,9 +814,8 @@ void SRF_RefS::solveSystemSmoothTruncQuadOnly12()
     }
 
     //Solve the linear system of equations using a minimum least squares method
-    MatrixXf AtA, AtB;
-    AtA.multiply_AtA(A);
-    AtB.multiply_AtB(A,B);
+    MatrixXf AtA = A.adjoint() * A;
+    MatrixXf AtB = A.adjoint() * B;
     kai_loc_level = AtA.ldlt().solve(AtB);
     VectorXf res = A*kai_loc_level - B;
     //cout << endl << "max res: " << res.maxCoeff();
@@ -881,8 +876,8 @@ void SRF_RefS::solveSystemSmoothTruncQuadOnly12()
         }
 
         //Solve the linear system of equations using a minimum least squares method
-        AtA.multiply_AtA(Aw);
-        AtB.multiply_AtB(Aw,Bw);
+        AtA = Aw.adjoint() * Aw;
+        AtB = Aw.adjoint() * Bw;
         kai_loc_level = AtA.ldlt().solve(AtB);
         res = A*kai_loc_level - B;
 
